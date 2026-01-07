@@ -8,45 +8,75 @@
     <style>
         :root { --gold: #d4af37; --dark: #0a0a0a; --gray: #1a1a1a; --white: #ffffff; --red: #c0392b; --green: #27ae60; --blue: #3498db; }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Poppins', sans-serif; background: var(--dark); color: var(--white); height: 100vh; overflow: hidden; }
+        body { font-family: 'Poppins', sans-serif; background: var(--dark); color: var(--white); height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
         h1, h2, h3 { font-family: 'Bebas Neue', cursive; letter-spacing: 2px; }
 
+        /* LOGIN */
         #login-screen { position: fixed; inset: 0; z-index: 999; background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=1600'); background-size: cover; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .login-box { background: var(--gray); padding: 30px; border-radius: 15px; border: 1px solid var(--gold); width: 100%; max-width: 400px; text-align: center; }
-        
         input, select, textarea { width: 100%; padding: 14px; margin: 10px 0; background: #222; border: 1px solid #444; color: white; border-radius: 8px; font-size: 16px; outline: none; }
         .btn-tab-login { display: flex; gap: 8px; margin-bottom: 20px; }
         .tab-btn { flex: 1; padding: 12px; background: transparent; border: 1px solid #444; color: #777; cursor: pointer; border-radius: 8px; font-weight: bold; font-size: 0.75rem; }
         .tab-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(212,175,55,0.1); }
 
-        .wrapper { display: flex; height: 100vh; width: 100vw; }
-        aside { width: 280px; background: #000; padding: 20px; border-right: 1px solid var(--gold); display: flex; flex-direction: column; }
-        main { flex: 1; padding: 25px; background: #111; overflow-y: auto; }
+        /* ESTRUTURA PRINCIPAL */
+        .wrapper { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        main { flex: 1; padding: 20px; overflow-y: auto; padding-bottom: 20px; }
 
-        .nav-link { padding: 15px; margin-bottom: 8px; cursor: pointer; border-radius: 8px; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; color: #888; display: flex; align-items: center; justify-content: space-between; }
-        .nav-link.active { background: var(--gold); color: black; }
-        .badge { background: var(--red); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; }
+        /* MENU INFERIOR */
+        aside { 
+            background: #000; 
+            border-top: 2px solid var(--gold); 
+            padding: 10px 5px; 
+            display: flex; 
+            flex-direction: column; 
+            order: 2; /* Move para baixo */
+        }
+        
+        nav { 
+            display: flex !important; 
+            justify-content: space-around; 
+            align-items: center; 
+            width: 100%;
+        }
 
+        .nav-link { 
+            flex: 1;
+            padding: 10px 2px; 
+            cursor: pointer; 
+            border-radius: 5px; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            font-size: 0.65rem; 
+            color: #888; 
+            display: flex; 
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        .nav-link.active { color: var(--gold); background: rgba(212,175,55,0.05); }
+        .badge { position: absolute; top: 2px; right: 5px; background: var(--red); color: white; padding: 1px 5px; border-radius: 10px; font-size: 0.6rem; }
+
+        /* COMPONENTES */
         .panel { background: var(--gray); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #333; }
         .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
         .card { background: #000; padding: 15px; border-radius: 10px; border-left: 4px solid var(--gold); }
-        
         .notif-card { padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid var(--blue); background: #222; }
         .notif-promo { border-left-color: var(--gold); }
         .notif-pendente { border-left-color: var(--red); }
 
         .btn { background: var(--gold); color: black; border: none; padding: 15px; font-weight: bold; cursor: pointer; border-radius: 8px; text-transform: uppercase; font-size: 0.8rem; width: 100%; margin-top: 5px;}
-        .btn-red { background: var(--red); color: white; margin-top: auto; }
+        .btn-exit { background: transparent; color: var(--red); border: none; font-size: 0.65rem; padding: 5px; font-weight: bold; }
         
         .section { display: none; }
         .active-section { display: block; }
 
-        @media (max-width: 850px) {
-            .wrapper { flex-direction: column; }
-            aside { width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--gold); }
-            main { height: calc(100vh - 150px); }
-            nav { display: none; gap: 10px; overflow-x: auto; white-space: nowrap; padding: 10px 0; }
-            .nav-link { min-width: 120px; margin-bottom: 0; display: inline-flex; }
+        @media (min-width: 850px) {
+            body { flex-direction: row; }
+            aside { width: 250px; height: 100vh; order: 0; border-top: none; border-right: 2px solid var(--gold); }
+            nav { flex-direction: column; justify-content: flex-start; }
+            .nav-link { width: 100%; font-size: 0.8rem; padding: 15px; margin-bottom: 10px; }
         }
     </style>
 </head>
@@ -67,33 +97,13 @@
 </div>
 
 <div class="wrapper">
-    <aside>
-        <h2 style="color: var(--gold); text-align: center; margin-bottom: 20px;">LUKINHA'S</h2>
-        
-        <nav id="m-adm" style="display: none; flex-direction: column;">
-            <div class="nav-link active" onclick="tab('a-home', this)">Agenda</div>
-            <div class="nav-link" onclick="tab('a-promo', this)">Promoções</div>
-            <div class="nav-link" onclick="tab('a-caixa', this)">Financeiro</div>
-            <div class="nav-link" onclick="tab('a-precos', this)">Preços</div>
-            <div class="nav-link" onclick="tab('a-cli', this)">Clientes</div>
-        </nav>
-
-        <nav id="m-cli" style="display: none; flex-direction: column;">
-            <div class="nav-link active" onclick="tab('c-book', this)">Agendar</div>
-            <div class="nav-link" onclick="tab('c-pay', this)">Pagar</div>
-            <div class="nav-link" onclick="tab('c-notif', this)">Avisos <span class="badge" id="b-notif">0</span></div>
-        </nav>
-
-        <button class="btn btn-red" onclick="location.reload()">Sair</button>
-    </aside>
-
     <main>
         <section id="a-home" class="section">
             <h1>Agenda Hoje</h1>
             <div class="stat-grid"><div class="card"><h3>Total</h3><p id="st-t">0</p></div><div class="card"><h3>Pendente</h3><p id="st-v">R$ 0</p></div></div>
             <div class="panel" style="overflow-x:auto">
                 <table style="width:100%; text-align:left; font-size:0.8rem;">
-                    <thead><tr style="color:var(--gold)"><th>CLIENTE</th><th>SERVIÇO</th><th>VALOR</th><th>AÇÃO</th></tr></thead>
+                    <thead><tr style="color:var(--gold)"><th>CLI</th><th>SERV</th><th>VALOR</th><th>AÇÃO</th></tr></thead>
                     <tbody id="t-agenda-body"></tbody>
                 </table>
             </div>
@@ -148,6 +158,23 @@
             <div id="notif-list"></div>
         </section>
     </main>
+
+    <aside>
+        <nav id="m-adm" style="display: none;">
+            <div class="nav-link active" onclick="tab('a-home', this)">Agenda</div>
+            <div class="nav-link" onclick="tab('a-promo', this)">Promos</div>
+            <div class="nav-link" onclick="tab('a-caixa', this)">Caixa</div>
+            <div class="nav-link" onclick="tab('a-precos', this)">Preços</div>
+            <div class="nav-link" onclick="tab('a-cli', this)">Clientes</div>
+        </nav>
+
+        <nav id="m-cli" style="display: none;">
+            <div class="nav-link active" onclick="tab('c-book', this)">Agendar</div>
+            <div class="nav-link" onclick="tab('c-pay', this)">Pagar</div>
+            <div class="nav-link" onclick="tab('c-notif', this)">Avisos <span class="badge" id="b-notif">0</span></div>
+        </nav>
+        <button class="btn-exit" onclick="location.reload()">SAIR DO SISTEMA</button>
+    </aside>
 </div>
 
 <script>
@@ -243,7 +270,6 @@
 
     function render() {
         if(!userAtivo) return;
-
         if(userAtivo.t === 'admin') {
             let h = "", v = 0;
             db.agenda.forEach(a => {
@@ -257,11 +283,9 @@
             document.getElementById('st-v').innerText = "R$ " + v;
             document.getElementById('l-caixa').innerHTML = `<h3>Total Acumulado: R$ ${db.caixa.toFixed(2)}</h3>`;
         }
-
         if(userAtivo.t === 'client') {
             const ag = db.agenda.find(x => x.cli === userAtivo.u && !x.pago);
             document.getElementById('pay-box').innerHTML = ag ? `<h3>${ag.serv} - R$ ${ag.val}</h3><p>PIX: lukinha@barber.com</p><button class="btn" onclick="darBaixa(${ag.id})">Informar Pagamento</button>` : "Tudo pago!";
-
             let nList = "", count = 0;
             db.promos.forEach(p => { nList += `<div class="notif-card notif-promo"><strong>${p.t}</strong><br>${p.m}</div>`; count++; });
             if(ag) { nList += `<div class="notif-card notif-pendente"><strong>PAGAMENTO!</strong><br>Você tem um serviço pendente de R$${ag.val}</div>`; count++; }
