@@ -3,71 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Barbearia do Lukinha</title>
+    <title>Barbearia do Lukinha - V6</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --dark: #0a0a0a; --gray: #1a1a1a; --white: #ffffff; --red: #c0392b; --green: #27ae60; }
-        
+        :root { --gold: #d4af37; --dark: #0a0a0a; --gray: #1a1a1a; --white: #ffffff; --red: #c0392b; --green: #27ae60; --blue: #3498db; }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        body { font-family: 'Poppins', sans-serif; background: var(--dark); color: var(--white); height: 100vh; overflow-x: hidden; }
+        body { font-family: 'Poppins', sans-serif; background: var(--dark); color: var(--white); height: 100vh; overflow: hidden; }
         h1, h2, h3 { font-family: 'Bebas Neue', cursive; letter-spacing: 2px; }
 
-        /* LOGIN RESPONSIVO */
+        /* LOGIN */
         #login-screen { position: fixed; inset: 0; z-index: 999; background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=1600'); background-size: cover; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .login-box { background: var(--gray); padding: 30px; border-radius: 15px; border: 1px solid var(--gold); width: 100%; max-width: 400px; text-align: center; }
         
-        /* INPUTS OTIMIZADOS PARA MOBILE (TAMANHO 16PX EVITA ZOOM NO IOS) */
-        input, select { width: 100%; padding: 14px; margin: 10px 0; background: #222; border: 1px solid #444; color: white; border-radius: 8px; font-size: 16px; outline: none; }
-        
+        input, select, textarea { width: 100%; padding: 14px; margin: 10px 0; background: #222; border: 1px solid #444; color: white; border-radius: 8px; font-size: 16px; outline: none; }
         .btn-tab-login { display: flex; gap: 8px; margin-bottom: 20px; }
-        .tab-btn { flex: 1; padding: 12px; background: transparent; border: 1px solid #444; color: #777; cursor: pointer; border-radius: 8px; font-weight: bold; font-size: 0.75rem; transition: 0.3s; }
+        .tab-btn { flex: 1; padding: 12px; background: transparent; border: 1px solid #444; color: #777; cursor: pointer; border-radius: 8px; font-weight: bold; font-size: 0.75rem; }
         .tab-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(212,175,55,0.1); }
 
-        /* LAYOUT PRINCIPAL */
-        .wrapper { display: flex; height: 100vh; width: 100vw; flex-direction: row; }
-        
-        aside { width: 280px; background: #000; padding: 20px; border-right: 1px solid var(--gold); display: flex; flex-direction: column; z-index: 10; }
-        main { flex: 1; padding: 25px; background: #111; overflow-y: auto; padding-bottom: 100px; }
+        /* LAYOUT */
+        .wrapper { display: flex; height: 100vh; width: 100vw; }
+        aside { width: 280px; background: #000; padding: 20px; border-right: 1px solid var(--gold); display: flex; flex-direction: column; }
+        main { flex: 1; padding: 25px; background: #111; overflow-y: auto; }
 
-        /* NAVEGAÇÃO MOBILE */
-        .nav-link { padding: 15px; margin-bottom: 10px; cursor: pointer; border-radius: 8px; transition: 0.2s; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; color: #888; display: flex; align-items: center; }
+        /* NAV */
+        .nav-link { padding: 15px; margin-bottom: 8px; cursor: pointer; border-radius: 8px; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; color: #888; display: flex; align-items: center; justify-content: space-between; }
         .nav-link.active { background: var(--gold); color: black; }
+        .badge { background: var(--red); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.6rem; }
 
-        /* COMPONENTES DE INTERFACE */
+        /* COMPONENTES */
         .panel { background: var(--gray); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #333; }
         .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
         .card { background: #000; padding: 15px; border-radius: 10px; border-left: 4px solid var(--gold); }
-        .card h3 { font-size: 0.75rem; color: var(--gold); opacity: 0.8; }
-        .card p { font-size: 1.2rem; font-weight: bold; }
+        .card h3 { font-size: 0.75rem; color: var(--gold); }
+        
+        /* NOTIFICAÇÕES */
+        .notif-card { padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid var(--blue); background: #222; }
+        .notif-promo { border-left-color: var(--gold); }
+        .notif-pendente { border-left-color: var(--red); }
 
-        /* TABELAS RESPONSIVAS */
-        .table-container { width: 100%; overflow-x: auto; background: #151515; border-radius: 8px; }
-        table { width: 100%; border-collapse: collapse; min-width: 500px; }
-        th { text-align: left; color: var(--gold); padding: 15px; background: #050505; font-size: 0.7rem; }
-        td { padding: 15px; border-bottom: 1px solid #222; font-size: 0.85rem; }
-
-        .btn { background: var(--gold); color: black; border: none; padding: 15px; font-weight: bold; cursor: pointer; border-radius: 8px; text-transform: uppercase; font-size: 0.9rem; transition: 0.2s; }
-        .btn:active { transform: scale(0.98); }
+        .btn { background: var(--gold); color: black; border: none; padding: 15px; font-weight: bold; cursor: pointer; border-radius: 8px; text-transform: uppercase; font-size: 0.8rem; width: 100%; }
         .btn-red { background: var(--red); color: white; margin-top: auto; }
-        .btn-green { background: var(--green); color: white; }
-
+        
         .section { display: none; }
-        .active-section { display: block; animation: slideUp 0.3s ease; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .active-section { display: block; }
 
-        .pix-area { background: white; color: black; padding: 20px; border-radius: 12px; text-align: center; margin: 15px 0; }
-
-        /* AJUSTES PARA CELULAR */
         @media (max-width: 850px) {
             .wrapper { flex-direction: column; }
-            aside { width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--gold); padding: 15px; }
-            aside h2 { font-size: 1.5rem; }
-            .nav-link { display: inline-block; padding: 10px 15px; margin-right: 5px; font-size: 0.7rem; }
-            #m-adm, #m-cli { display: flex !important; overflow-x: auto; white-space: nowrap; padding-bottom: 5px; }
-            .stat-grid { grid-template-columns: repeat(2, 1fr); }
-            main { padding: 15px; }
-            .login-box { padding: 25px; }
+            aside { width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--gold); }
+            main { height: calc(100vh - 150px); }
+            nav { display: flex !important; overflow-x: auto; gap: 10px; padding-bottom: 5px; }
+            .nav-link { min-width: 120px; margin-bottom: 0; justify-content: center; }
         }
     </style>
 </head>
@@ -75,34 +60,34 @@
 
 <div id="login-screen">
     <div class="login-box">
-        <h1 style="color: var(--gold); font-size: 2.5rem; margin-bottom: 10px;">LUKINHA'S</h1>
+        <h1 style="color: var(--gold); font-size: 2.2rem; margin-bottom: 10px;">LUKINHA'S</h1>
         <div class="btn-tab-login">
-            <button class="tab-btn active" id="tab-cli" onclick="setLoginType('client')">ÁREA CLIENTE</button>
+            <button class="tab-btn active" id="tab-cli" onclick="setLoginType('client')">CLIENTE</button>
             <button class="tab-btn" id="tab-adm" onclick="setLoginType('admin')">ADMIN</button>
         </div>
-        <input type="text" id="u-in" placeholder="Usuário" autocomplete="off">
+        <input type="text" id="u-in" placeholder="Usuário">
         <input type="password" id="p-in" placeholder="Senha">
-        <button class="btn" style="width: 100%;" onclick="logar()">Entrar</button>
+        <button class="btn" onclick="logar()">Entrar</button>
         <p id="err" style="color: var(--red); font-size: 0.75rem; margin-top: 15px;"></p>
     </div>
 </div>
 
 <div class="wrapper">
     <aside>
-        <div style="text-align: center; margin-bottom: 15px;">
-            <h2 style="color: var(--gold);">LUKINHA'S BARBER</h2>
-        </div>
+        <h2 style="color: var(--gold); text-align: center; margin-bottom: 20px;">MENU</h2>
         
-        <nav id="m-adm" style="display: none;">
+        <nav id="m-adm" style="display: none; flex-direction: column;">
             <div class="nav-link active" onclick="tab('a-home', this)">Agenda</div>
             <div class="nav-link" onclick="tab('a-caixa', this)">Caixa</div>
+            <div class="nav-link" onclick="tab('a-promo', this)">Criar Promoção</div>
             <div class="nav-link" onclick="tab('a-precos', this)">Preços</div>
-            <div class="nav-link" onclick="tab('a-cli', this)">Clientes</div>
+            <div class="nav-link" onclick="tab('a-cli', this)">Usuários</div>
         </nav>
 
-        <nav id="m-cli" style="display: none;">
+        <nav id="m-cli" style="display: none; flex-direction: column;">
             <div class="nav-link active" onclick="tab('c-book', this)">Agendar</div>
             <div class="nav-link" onclick="tab('c-pay', this)">Pagar</div>
+            <div class="nav-link" onclick="tab('c-notif', this)">Avisos <span class="badge" id="b-notif">0</span></div>
         </nav>
 
         <button class="btn btn-red" onclick="location.reload()">Sair</button>
@@ -110,142 +95,134 @@
 
     <main>
         <section id="a-home" class="section">
-            <h1>Agenda do Dia</h1>
+            <h1>Agenda Master</h1>
             <div class="stat-grid">
                 <div class="card"><h3>Total</h3><p id="st-t">0</p></div>
-                <div class="card"><h3>Pagos</h3><p id="st-p">0</p></div>
-                <div class="card" style="grid-column: span 2;"><h3>A Receber Hoje</h3><p id="st-v">R$ 0,00</p></div>
+                <div class="card"><h3>A Receber</h3><p id="st-v">R$ 0,00</p></div>
             </div>
-            <div class="table-container">
-                <table id="t-agenda">
-                    <thead><tr><th>Cliente</th><th>Serviço</th><th>Data</th><th>Status</th><th>Ação</th></tr></thead>
-                    <tbody></tbody>
+            <div class="panel" style="overflow-x:auto">
+                <table style="width:100%; text-align:left;">
+                    <thead><tr style="color:var(--gold); font-size:0.7rem"><th>CLI</th><th>SERV</th><th>DATA</th><th>STATUS</th></tr></thead>
+                    <tbody id="t-agenda-body"></tbody>
                 </table>
             </div>
         </section>
 
-        <section id="a-caixa" class="section">
-            <h1>Financeiro</h1>
+        <section id="a-promo" class="section">
+            <h1>Notificar Promoção</h1>
             <div class="panel">
-                <h2 style="color: var(--green);">Total Geral: R$ <span id="val-c">0.00</span></h2>
-                <div class="table-container" style="margin-top: 15px;">
-                    <table>
-                        <thead><tr><th>Data</th><th>Cliente</th><th>Valor</th></tr></thead>
-                        <tbody id="l-caixa"></tbody>
-                    </table>
-                </div>
+                <input type="text" id="p-titulo" placeholder="Ex: Promoção de Terça!">
+                <textarea id="p-msg" placeholder="Descreva a promoção..." rows="3"></textarea>
+                <button class="btn" onclick="addPromo()">Enviar para todos</button>
             </div>
         </section>
 
+        <section id="a-caixa" class="section"><h1>Financeiro</h1><div id="l-caixa" class="panel"></div></section>
         <section id="a-precos" class="section">
-            <h1>Tabela de Preços</h1>
+            <h1>Configurar Preços</h1>
             <div class="panel">
-                <label>Corte (R$)</label><input type="number" id="i-corte" step="0.01">
-                <label>Barba (R$)</label><input type="number" id="i-barba" step="0.01">
-                <label>Combo (R$)</label><input type="number" id="i-combo" step="0.01">
-                <button class="btn" style="width:100%" onclick="savePrecos()">Salvar Preços</button>
+                <label>Corte</label><input type="number" id="i-corte">
+                <label>Barba</label><input type="number" id="i-barba">
+                <label>Combo</label><input type="number" id="i-combo">
+                <button class="btn" onclick="savePrecos()">Salvar</button>
             </div>
         </section>
-
         <section id="a-cli" class="section">
-            <h1>Autorizar Cliente</h1>
+            <h1>Novo Usuário</h1>
             <div class="panel">
                 <input type="text" id="n-u" placeholder="Login">
                 <input type="password" id="n-p" placeholder="Senha">
-                <button class="btn btn-green" style="width:100%" onclick="regUser()">Cadastrar</button>
+                <button class="btn" onclick="regUser()">Cadastrar Cliente</button>
             </div>
         </section>
 
         <section id="c-book" class="section">
-            <h1>Agendar Horário</h1>
+            <h1>Novo Agendamento</h1>
             <div class="panel">
-                <label>Serviço:</label><select id="s-serv"></select>
-                <label>Data/Hora:</label><input type="datetime-local" id="s-data">
-                <button class="btn" style="width:100%" onclick="addAgenda()">Confirmar Reserva</button>
+                <label>O que vamos fazer?</label><select id="s-serv"></select>
+                <label>Quando?</label><input type="datetime-local" id="s-data">
+                <button class="btn" onclick="addAgenda()">Confirmar</button>
             </div>
         </section>
 
         <section id="c-pay" class="section">
-            <h1>Pagamento</h1>
+            <h1>Pagamentos Pendentes</h1>
             <div id="pay-box" class="panel"></div>
+        </section>
+
+        <section id="c-notif" class="section">
+            <h1>Minhas Notificações</h1>
+            <div id="notif-list"></div>
         </section>
     </main>
 </div>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('lukinha_v5_final')) || {
-        prices: {corte: 35.00, barba: 25.00, combo: 50.00},
+    let db = JSON.parse(localStorage.getItem('lukinha_v6')) || {
+        prices: {corte: 35, barba: 25, combo: 50},
         users: [{u: 'lukinha', p: 'master', t: 'admin'}],
         agenda: [],
+        promos: [],
         caixa: 0
     };
 
-    let atual = null;
+    let userAtivo = null;
     let loginType = 'client';
 
-    const save = () => { localStorage.setItem('lukinha_v5_final', JSON.stringify(db)); render(); };
-
-    function setLoginType(t) {
-        loginType = t;
-        document.getElementById('tab-cli').classList.toggle('active', t === 'client');
-        document.getElementById('tab-adm').classList.toggle('active', t === 'admin');
+    function setLoginType(t) { 
+        loginType = t; 
+        document.getElementById('tab-cli').className = t==='client'?'tab-btn active':'tab-btn';
+        document.getElementById('tab-adm').className = t==='admin'?'tab-btn active':'tab-btn';
     }
+
+    const save = () => { localStorage.setItem('lukinha_v6', JSON.stringify(db)); render(); };
 
     function logar() {
         const u = document.getElementById('u-in').value.toLowerCase();
         const p = document.getElementById('p-in').value;
-        const user = db.users.find(x => x.u.toLowerCase() === u && x.p === p);
+        const user = db.users.find(x => x.u === u && x.p === p);
 
         if(user) {
-            if(loginType === 'admin' && user.t !== 'admin') {
-                document.getElementById('err').innerText = "Acesso Negado.";
-                return;
-            }
-            atual = user;
+            if(loginType === 'admin' && user.t !== 'admin') return alert("Acesso restrito");
+            userAtivo = user;
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById(user.t === 'admin' ? 'm-adm' : 'm-cli').style.display = 'flex';
-            tab(user.t === 'admin' ? 'a-home' : 'c-book', document.querySelector('.nav-link.active'));
-            syncInputs(); render();
-        } else {
-            document.getElementById('err').innerText = "Dados Inválidos.";
-        }
+            tab(user.t === 'admin' ? 'a-home' : 'c-book');
+            sync(); render();
+        } else alert("Erro de login");
     }
 
     function tab(id, el) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active-section'));
-        document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
         document.getElementById(id).classList.add('active-section');
-        if(el) el.classList.add('active');
+        if(el) {
+            document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+            el.classList.add('active');
+        }
     }
 
-    function syncInputs() {
+    function sync() {
         document.getElementById('i-corte').value = db.prices.corte;
         document.getElementById('i-barba').value = db.prices.barba;
         document.getElementById('i-combo').value = db.prices.combo;
         const s = document.getElementById('s-serv');
-        if(s) s.innerHTML = `
-            <option value="${db.prices.corte}">Corte - R$ ${db.prices.corte}</option>
-            <option value="${db.prices.barba}">Barba - R$ ${db.prices.barba}</option>
-            <option value="${db.prices.combo}">Combo - R$ ${db.prices.combo}</option>`;
+        if(s) s.innerHTML = `<option value="${db.prices.corte}">Corte R$${db.prices.corte}</option><option value="${db.prices.barba}">Barba R$${db.prices.barba}</option><option value="${db.prices.combo}">Combo R$${db.prices.combo}</option>`;
     }
 
-    function savePrecos() {
-        db.prices.corte = parseFloat(document.getElementById('i-corte').value);
-        db.prices.barba = parseFloat(document.getElementById('i-barba').value);
-        db.prices.combo = parseFloat(document.getElementById('i-combo').value);
-        save(); alert("Tabela Atualizada!");
-    }
-
-    function regUser() {
-        const u = document.getElementById('n-u').value, p = document.getElementById('n-p').value;
-        if(u && p) { db.users.push({u, p, t:'client'}); save(); alert("Cliente Autorizado!"); }
+    function addPromo() {
+        const t = document.getElementById('p-titulo').value;
+        const m = document.getElementById('p-msg').value;
+        if(t && m) {
+            db.promos.push({id: Date.now(), t, m, d: new Date().toLocaleDateString()});
+            save(); alert("Promoção enviada!");
+        }
     }
 
     function addAgenda() {
         const s = document.getElementById('s-serv'), d = document.getElementById('s-data').value;
-        if(!d) return alert("Escolha data!");
-        db.agenda.push({ id: Date.now(), cli: atual.u, serv: s.options[s.selectedIndex].text, val: parseFloat(s.value), data: d.replace('T', ' '), pago: false });
-        save(); alert("Agendado!"); tab('c-pay', document.querySelectorAll('.nav-link')[1]);
+        if(!d) return alert("Data?");
+        db.agenda.push({id: Date.now(), cli: userAtivo.u, serv: s.options[s.selectedIndex].text, val: parseFloat(s.value), data: d.replace('T',' '), pago: false});
+        save(); alert("Agendado!"); tab('c-pay');
     }
 
     function darBaixa(id) {
@@ -253,26 +230,53 @@
         if(!db.agenda[i].pago) { db.agenda[i].pago = true; db.caixa += db.agenda[i].val; save(); }
     }
 
+    function regUser() {
+        const u = document.getElementById('n-u').value.toLowerCase(), p = document.getElementById('n-p').value;
+        if(u && p) { db.users.push({u, p, t:'client'}); save(); alert("Cadastrado!"); }
+    }
+
+    function savePrecos() {
+        db.prices.corte = parseFloat(document.getElementById('i-corte').value);
+        db.prices.barba = parseFloat(document.getElementById('i-barba').value);
+        db.prices.combo = parseFloat(document.getElementById('i-combo').value);
+        save();
+    }
+
     function render() {
-        if(!atual) return;
-        const tb = document.querySelector('#t-agenda tbody');
-        if(tb) {
-            tb.innerHTML = ""; let t = 0, p = 0, v = 0;
+        if(!userAtivo) return;
+
+        // Admin: Agenda e Caixa
+        if(userAtivo.t === 'admin') {
+            let h = "", v = 0;
             db.agenda.forEach(a => {
-                t++; if(a.pago) p++; else v += a.val;
-                tb.innerHTML += `<tr><td>${a.cli}</td><td>${a.serv}</td><td>${a.data}</td><td style="color:${a.pago?'#27ae60':'#d4af37'}">${a.pago?'OK':'Pendente'}</td><td><button class="btn btn-green" style="padding:5px 10px; font-size:10px; width:auto" onclick="darBaixa(${a.id})">Baixa</button></td></tr>`;
+                if(!a.pago) v += a.val;
+                h += `<tr><td>${a.cli}</td><td>${a.serv}</td><td>${a.data}</td><td style="color:${a.pago?'#27ae60':'#d4af37'}">${a.pago?'FIM':'PEND'}</td></tr>`;
             });
-            document.getElementById('st-t').innerText = t; document.getElementById('st-p').innerText = p; document.getElementById('st-v').innerText = "R$ " + v.toFixed(2);
+            document.getElementById('t-agenda-body').innerHTML = h;
+            document.getElementById('st-t').innerText = db.agenda.length;
+            document.getElementById('st-v').innerText = "R$ "+v.toFixed(2);
+            document.getElementById('l-caixa').innerHTML = `<h2>Total em Caixa: R$ ${db.caixa.toFixed(2)}</h2>`;
         }
-        const lc = document.getElementById('l-caixa');
-        if(lc) {
-            lc.innerHTML = ""; db.agenda.filter(x => x.pago).forEach(x => { lc.innerHTML += `<tr><td>${x.data}</td><td>${x.cli}</td><td>R$ ${x.val.toFixed(2)}</td></tr>`; });
-            document.getElementById('val-c').innerText = db.caixa.toFixed(2);
-        }
-        const pb = document.getElementById('pay-box');
-        if(pb) {
-            const ag = db.agenda.find(x => x.cli === atual.u && !x.pago);
-            pb.innerHTML = ag ? `<h3>${ag.serv}</h3><h2 style="color:var(--gold)">R$ ${ag.val.toFixed(2)}</h2><div class="pix-area"><strong>CHAVE PIX:</strong><br>lukinha@barber.com</div><button class="btn btn-green" style="width:100%" onclick="darBaixa(${ag.id})">Confirmar Pagamento</button>` : "<p>Tudo em dia por aqui!</p>";
+
+        // Cliente: Notificações e Pagamentos
+        if(userAtivo.t === 'client') {
+            const ag = db.agenda.find(x => x.cli === userAtivo.u && !x.pago);
+            const pb = document.getElementById('pay-box');
+            pb.innerHTML = ag ? `<h3>${ag.serv}</h3><h2 style="color:var(--gold)">R$ ${ag.val.toFixed(2)}</h2><p>PIX: lukinha@barber.com</p><button class="btn" onclick="darBaixa(${ag.id})">Confirmar Pagamento</button>` : "Nenhuma pendência.";
+
+            let nList = "", count = 0;
+            // Promoções
+            db.promos.forEach(p => {
+                nList += `<div class="notif-card notif-promo"><strong>PROMO: ${p.t}</strong><br><small>${p.m}</small></div>`;
+                count++;
+            });
+            // Pendências
+            if(ag) {
+                nList += `<div class="notif-card notif-pendente"><strong>PAGAMENTO EM ABERTO</strong><br>Seu ${ag.serv} ainda não foi compensado.</div>`;
+                count++;
+            }
+            document.getElementById('notif-list').innerHTML = nList || "Sem avisos.";
+            document.getElementById('b-notif').innerText = count;
         }
     }
 </script>
