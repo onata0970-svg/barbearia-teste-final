@@ -1,298 +1,540 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Barbearia do Lukinha - V6 Final</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        :root { --gold: #d4af37; --dark: #0a0a0a; --gray: #1a1a1a; --white: #ffffff; --red: #c0392b; --green: #27ae60; --blue: #3498db; }
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Poppins', sans-serif; background: var(--dark); color: var(--white); height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
-        h1, h2, h3 { font-family: 'Bebas Neue', cursive; letter-spacing: 2px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUKINHA'S BARBER</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+    :root { --gold: #d4af37; --dark: #0a0a0a; --gray: #1a1a1a; --white: #ffffff; --red: #c0392b; --green: #27ae60; --blue: #3498db; }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    
+    body { font-family: 'Poppins', sans-serif; background: var(--dark); color: var(--white); height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+    h1, h2, h3 { font-family: 'Bebas Neue', cursive; letter-spacing: 2px; }
 
-        /* LOGIN */
-        #login-screen { position: fixed; inset: 0; z-index: 999; background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=1600'); background-size: cover; display: flex; align-items: center; justify-content: center; padding: 20px; }
-        .login-box { background: var(--gray); padding: 30px; border-radius: 15px; border: 1px solid var(--gold); width: 100%; max-width: 400px; text-align: center; }
-        input, select, textarea { width: 100%; padding: 14px; margin: 10px 0; background: #222; border: 1px solid #444; color: white; border-radius: 8px; font-size: 16px; outline: none; }
-        .btn-tab-login { display: flex; gap: 8px; margin-bottom: 20px; }
-        .tab-btn { flex: 1; padding: 12px; background: transparent; border: 1px solid #444; color: #777; cursor: pointer; border-radius: 8px; font-weight: bold; font-size: 0.75rem; }
-        .tab-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(212,175,55,0.1); }
+    /* LOGIN */
+    #login-screen { position: fixed; inset: 0; z-index: 999; background: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=1600'); background-size: cover; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+    .login-box { background: var(--gray); padding: 30px; border-radius: 15px; border: 1px solid var(--gold); width: 100%; max-width: 400px; text-align: center; }
+    
+    input, select, textarea { width: 100%; padding: 14px; margin: 10px 0; background: #222; border: 1px solid #444; color: white; border-radius: 8px; font-size: 16px; outline: none; }
+    textarea { resize: vertical; min-height: 80px; }
+    
+    /* LAYOUT PRINCIPAL */
+    .wrapper { flex: 1; display: flex; flex-direction: column; overflow: hidden; width: 100vw; height: 100vh; }
+    main { flex: 1; padding: 20px; overflow-y: auto; padding-bottom: 80px; background: #111; }
 
-        /* ESTRUTURA PRINCIPAL */
-        .wrapper { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-        main { flex: 1; padding: 20px; overflow-y: auto; padding-bottom: 20px; }
+    /* ASIDE / NAVBAR */
+    aside { background: #000; border-top: 2px solid var(--gold); padding: 10px 5px; display: flex; flex-direction: column; order: 2; z-index: 100; justify-content: space-between; }
+    nav { display: flex; justify-content: space-around; align-items: center; width: 100%; }
 
-        /* MENU INFERIOR */
-        aside { 
-            background: #000; 
-            border-top: 2px solid var(--gold); 
-            padding: 10px 5px; 
-            display: flex; 
-            flex-direction: column; 
-            order: 2; /* Move para baixo */
-        }
-        
-        nav { 
-            display: flex !important; 
-            justify-content: space-around; 
-            align-items: center; 
-            width: 100%;
-        }
+    .nav-link { flex: 1; padding: 10px 2px; cursor: pointer; border-radius: 5px; font-weight: 600; text-transform: uppercase; font-size: 0.65rem; color: #888; display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; transition: 0.3s; }
+    .nav-link.active { color: var(--gold); background: rgba(212,175,55,0.05); }
+    .badge { position: absolute; top: -5px; right: 25%; background: var(--red); color: white; padding: 2px 6px; border-radius: 10px; font-size: 0.6rem; }
 
-        .nav-link { 
-            flex: 1;
-            padding: 10px 2px; 
-            cursor: pointer; 
-            border-radius: 5px; 
-            font-weight: 600; 
-            text-transform: uppercase; 
-            font-size: 0.65rem; 
-            color: #888; 
-            display: flex; 
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            position: relative;
-        }
-        .nav-link.active { color: var(--gold); background: rgba(212,175,55,0.05); }
-        .badge { position: absolute; top: 2px; right: 5px; background: var(--red); color: white; padding: 1px 5px; border-radius: 10px; font-size: 0.6rem; }
+    /* COMPONENTES */
+    .panel { background: var(--gray); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #333; }
+    .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+    .card { background: #000; padding: 15px; border-radius: 10px; border-left: 4px solid var(--gold); }
+    
+    .notif-card { padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid var(--blue); background: #222; }
+    .client-card { background: #181818; padding: 15px; border-radius: 10px; border: 1px solid #333; margin-bottom: 15px; }
+    
+    .btn { background: var(--gold); color: black; border: none; padding: 15px; font-weight: bold; cursor: pointer; border-radius: 8px; text-transform: uppercase; font-size: 0.8rem; width: 100%; margin-top: 5px; transition: 0.2s;}
+    .btn:active { transform: scale(0.98); }
+    .btn-red { background: var(--red); color: white; }
+    .btn-green { background: var(--green); color: white; }
+    .btn-sm { padding: 8px; font-size: 0.7rem; width: auto; }
+    .btn-exit { background: transparent; color: var(--red); border: none; font-size: 0.65rem; padding: 5px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer;}
 
-        /* COMPONENTES */
-        .panel { background: var(--gray); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #333; }
-        .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
-        .card { background: #000; padding: 15px; border-radius: 10px; border-left: 4px solid var(--gold); }
-        .notif-card { padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid var(--blue); background: #222; }
-        .notif-promo { border-left-color: var(--gold); }
-        .notif-pendente { border-left-color: var(--red); }
+    .section { display: none; animation: fadeIn 0.3s ease; }
+    .active-section { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .btn { background: var(--gold); color: black; border: none; padding: 15px; font-weight: bold; cursor: pointer; border-radius: 8px; text-transform: uppercase; font-size: 0.8rem; width: 100%; margin-top: 5px;}
-        .btn-exit { background: transparent; color: var(--red); border: none; font-size: 0.65rem; padding: 5px; font-weight: bold; }
-        
-        .section { display: none; }
-        .active-section { display: block; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
+    th { color: var(--gold); font-size: 0.8rem; text-transform: uppercase; }
+    td { font-size: 0.85rem; }
 
-        @media (min-width: 850px) {
-            body { flex-direction: row; }
-            aside { width: 250px; height: 100vh; order: 0; border-top: none; border-right: 2px solid var(--gold); }
-            nav { flex-direction: column; justify-content: flex-start; }
-            .nav-link { width: 100%; font-size: 0.8rem; padding: 15px; margin-bottom: 10px; }
-        }
-    </style>
+    .price-row { display: flex; gap: 10px; margin-bottom: 10px; align-items: center; }
+    .price-row input { margin: 0; }
+
+    @media (min-width: 850px) {
+        .wrapper { flex-direction: row; }
+        aside { width: 250px; height: 100vh; order: 0; border-top: none; border-right: 2px solid var(--gold); padding: 20px; }
+        nav { flex-direction: column; justify-content: flex-start; height: auto; gap: 10px; }
+        .nav-link { width: 100%; font-size: 0.8rem; padding: 15px; margin-bottom: 5px; flex-direction: row; justify-content: flex-start; gap: 10px; }
+        main { padding: 40px; }
+        .stat-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+</style>
 </head>
 <body>
 
-<div id="login-screen">
-    <div class="login-box">
-        <h1 style="color: var(--gold); font-size: 2.2rem; margin-bottom: 10px;">LUKINHA'S</h1>
-        <div class="btn-tab-login">
-            <button class="tab-btn active" id="tab-cli" onclick="setLoginType('client')">CLIENTE</button>
-            <button class="tab-btn" id="tab-adm" onclick="setLoginType('admin')">ADMIN</button>
+    <!-- TELA DE LOGIN -->
+    <div id="login-screen">
+        <h1 style="color: var(--gold); font-size: 3rem; margin-bottom: 20px; text-shadow: 2px 2px 4px black;">LUKINHA'S</h1>
+        <div class="login-box">
+            <h3 style="margin-bottom: 20px; color: #888;">ACESSO AO SISTEMA</h3>
+            <div id="form-login">
+                <input type="text" id="l-user" placeholder="Login / Telefone">
+                <input type="password" id="l-pass" placeholder="Senha">
+                <button class="btn" onclick="login()">ENTRAR</button>
+            </div>
+            <p id="login-msg" style="margin-top: 10px; font-size: 0.8rem; color: var(--red); min-height: 20px;"></p>
         </div>
-        <input type="text" id="u-in" placeholder="Usuário">
-        <input type="password" id="p-in" placeholder="Senha">
-        <button class="btn" onclick="logar()">Entrar</button>
-        <p id="err" style="color: var(--red); font-size: 0.75rem; margin-top: 15px;"></p>
     </div>
-</div>
 
-<div class="wrapper">
-    <main>
-        <section id="a-home" class="section">
-            <h1>Agenda Hoje</h1>
-            <div class="stat-grid"><div class="card"><h3>Total</h3><p id="st-t">0</p></div><div class="card"><h3>Pendente</h3><p id="st-v">R$ 0</p></div></div>
-            <div class="panel" style="overflow-x:auto">
-                <table style="width:100%; text-align:left; font-size:0.8rem;">
-                    <thead><tr style="color:var(--gold)"><th>CLI</th><th>SERV</th><th>VALOR</th><th>AÇÃO</th></tr></thead>
-                    <tbody id="t-agenda-body"></tbody>
-                </table>
-            </div>
-        </section>
+    <!-- APP PRINCIPAL -->
+    <div class="wrapper" id="app-wrapper" style="display: none;">
+        <aside>
+            <h2 style="color: var(--gold); text-align: center; margin-bottom: 30px; display: none; @media(min-width:850px){display:block;}">LUKINHA'S</h2>
+            
+            <nav id="m-adm" style="display: none;">
+                <div class="nav-link active" onclick="tab('a-home', this)">Agenda</div>
+                <div class="nav-link" onclick="tab('a-caixa', this)">Financeiro</div>
+                <div class="nav-link" onclick="tab('a-precos', this)">Preços</div>
+                <div class="nav-link" onclick="tab('a-promo', this)">Promoções</div>
+                <div class="nav-link" onclick="tab('a-cli', this)">Clientes</div>
+            </nav>
 
-        <section id="a-promo" class="section">
-            <h1>Criar Promoção</h1>
-            <div class="panel">
-                <input type="text" id="p-titulo" placeholder="Título">
-                <textarea id="p-msg" placeholder="Mensagem"></textarea>
-                <button class="btn" onclick="addPromo()">Publicar</button>
-            </div>
-        </section>
+            <nav id="m-cli" style="display: none;">
+                <div class="nav-link active" onclick="tab('c-book', this)">Agendar</div>
+                <div class="nav-link" onclick="tab('c-pay', this)">Pagar</div>
+                <div class="nav-link" onclick="tab('c-notif', this)">Avisos <span class="badge" id="b-notif">0</span></div>
+            </nav>
+            
+            <button class="btn-exit" onclick="logout()">SAIR DO SISTEMA</button>
+        </aside>
 
-        <section id="a-caixa" class="section"><h1>Caixa</h1><div class="panel" id="l-caixa"></div></section>
-        
-        <section id="a-precos" class="section">
-            <h1>Preços</h1>
-            <div class="panel">
-                <label>Corte</label><input type="number" id="i-corte">
-                <label>Barba</label><input type="number" id="i-barba">
-                <label>Combo</label><input type="number" id="i-combo">
-                <button class="btn" onclick="savePrecos()">Salvar</button>
-            </div>
-        </section>
+        <main>
+            <!-- SEÇÕES ADMIN -->
+            <section id="a-home" class="section active-section">
+                <h1>Agenda de Hoje</h1>
+                <div class="stat-grid">
+                    <div class="card"><h3>Total</h3><p id="st-t">0</p></div>
+                    <div class="card"><h3>Pendente</h3><p id="st-v" style="color: var(--red);">R$ 0</p></div>
+                </div>
+                <div class="panel" style="overflow-x:auto">
+                    <table>
+                        <thead>
+                            <tr><th>HORA</th><th>CLIENTE</th><th>SERVIÇO</th><th>AÇÃO</th></tr>
+                        </thead>
+                        <tbody id="t-agenda-body"></tbody>
+                    </table>
+                    <p id="agenda-empty" style="text-align: center; color: #555; padding: 20px;">Nenhum agendamento hoje.</p>
+                </div>
+            </section>
 
-        <section id="a-cli" class="section">
-            <h1>Novo Cliente</h1>
-            <div class="panel">
-                <input type="text" id="n-u" placeholder="Login">
-                <input type="password" id="n-p" placeholder="Senha">
-                <button class="btn" onclick="regUser()">Cadastrar</button>
-            </div>
-        </section>
+            <section id="a-caixa" class="section">
+                <h1>Gestão Financeira</h1>
+                <div class="stat-grid">
+                    <div class="card" style="border-left-color: var(--green);"><h3>Entradas</h3><p id="f-in" style="color:var(--green)">R$ 0,00</p></div>
+                    <div class="card" style="border-left-color: var(--red);"><h3>Saídas</h3><p id="f-out" style="color:var(--red)">R$ 0,00</p></div>
+                    <div class="card" style="border-left-color: var(--blue);"><h3>Saldo</h3><p id="f-total">R$ 0,00</p></div>
+                </div>
+                
+                <div class="panel">
+                    <h3>Nova Movimentação (Saída/Extra)</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <input type="text" id="f-desc" placeholder="Descrição (ex: Aluguel, Luz)">
+                        <input type="number" id="f-val" placeholder="Valor R$">
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-green" onclick="addMov('entrada')">+ ENTRADA</button>
+                        <button class="btn btn-red" onclick="addMov('saida')">- SAÍDA</button>
+                    </div>
+                </div>
 
-        <section id="c-book" class="section">
-            <h1>Agendar</h1>
-            <div class="panel">
-                <select id="s-serv"></select>
-                <input type="datetime-local" id="s-data">
-                <button class="btn" onclick="addAgenda()">Confirmar</button>
-            </div>
-        </section>
+                <div class="panel">
+                    <h3>Histórico de Transações</h3>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr><th>DATA</th><th>DESCRIÇÃO</th><th>TIPO</th><th>VALOR</th></tr>
+                            </thead>
+                            <tbody id="t-fin-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
 
-        <section id="c-pay" class="section">
-            <h1>Pagamento</h1>
-            <div id="pay-box" class="panel"></div>
-        </section>
+            <section id="a-precos" class="section">
+                <h1>Configurar Tabela de Preços</h1>
+                <div class="panel">
+                    <p style="margin-bottom: 15px; color: #888;">Edite os nomes e valores dos serviços abaixo:</p>
+                    <div id="prices-editor"></div>
+                    <button class="btn" onclick="savePrices()">SALVAR TABELA DE PREÇOS</button>
+                </div>
+            </section>
 
-        <section id="c-notif" class="section">
-            <h1>Notificações</h1>
-            <div id="notif-list"></div>
-        </section>
-    </main>
+            <section id="a-promo" class="section">
+                <h1>Enviar Promoções</h1>
+                <div class="panel">
+                    <input type="text" id="p-title" placeholder="Título da Promoção">
+                    <textarea id="p-msg" placeholder="Detalhes da promoção..."></textarea>
+                    <button class="btn" onclick="addPromo()">ENVIAR PARA TODOS</button>
+                </div>
+            </section>
 
-    <aside>
-        <nav id="m-adm" style="display: none;">
-            <div class="nav-link active" onclick="tab('a-home', this)">Agenda</div>
-            <div class="nav-link" onclick="tab('a-promo', this)">Promos</div>
-            <div class="nav-link" onclick="tab('a-caixa', this)">Caixa</div>
-            <div class="nav-link" onclick="tab('a-precos', this)">Preços</div>
-            <div class="nav-link" onclick="tab('a-cli', this)">Clientes</div>
-        </nav>
+            <section id="a-cli" class="section">
+                <h1>Gestão de Clientes</h1>
+                <div class="panel" style="border: 1px solid var(--gold);">
+                    <h3 style="color: var(--gold); margin-bottom: 10px;">Cadastrar Novo Cliente</h3>
+                    <input type="text" id="adm-c-name" placeholder="Nome do Cliente">
+                    <input type="text" id="adm-c-phone" placeholder="Telefone (Login)">
+                    <input type="text" id="adm-c-pass" placeholder="Senha Inicial">
+                    <button class="btn" onclick="adminRegisterClient()">CADASTRAR CLIENTE</button>
+                </div>
+                <hr style="border-color: #333; margin: 20px 0;">
+                <h3 style="margin-bottom: 15px;">Lista de Clientes</h3>
+                <div id="clients-list-container"></div>
+            </section>
 
-        <nav id="m-cli" style="display: none;">
-            <div class="nav-link active" onclick="tab('c-book', this)">Agendar</div>
-            <div class="nav-link" onclick="tab('c-pay', this)">Pagar</div>
-            <div class="nav-link" onclick="tab('c-notif', this)">Avisos <span class="badge" id="b-notif">0</span></div>
-        </nav>
-        <button class="btn-exit" onclick="location.reload()">SAIR DO SISTEMA</button>
-    </aside>
-</div>
+            <!-- SEÇÕES CLIENTE -->
+            <section id="c-book" class="section">
+                <h1>Agendar Corte</h1>
+                <div class="panel">
+                    <label>Escolha o Serviço</label>
+                    <select id="c-serv"></select>
+                    <label>Data</label><input type="date" id="c-date">
+                    <label>Horário</label>
+                    <select id="c-time">
+                        <option value="09:00">09:00</option>
+                        <option value="10:00">10:00</option>
+                        <option value="11:00">11:00</option>
+                        <option value="14:00">14:00</option>
+                        <option value="15:00">15:00</option>
+                        <option value="16:00">16:00</option>
+                        <option value="17:00">17:00</option>
+                        <option value="18:00">18:00</option>
+                    </select>
+                    <button class="btn" onclick="book()">Confirmar Agendamento</button>
+                </div>
+                <div class="panel">
+                    <h3>Meus Agendamentos</h3>
+                    <div id="my-bookings"></div>
+                </div>
+            </section>
+
+            <section id="c-pay" class="section">
+                <h1>Pagamentos Pendentes</h1>
+                <div class="panel" id="pay-box"><p>Sem pagamentos pendentes.</p></div>
+            </section>
+
+            <section id="c-notif" class="section">
+                <h1>Notificações</h1>
+                <div id="notif-list"></div>
+            </section>
+        </main>
+    </div>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('lukinha_v6')) || {
-        prices: {corte: 35, barba: 25, combo: 50},
-        users: [{u: 'lukinha', p: 'master', t: 'admin'}],
-        agenda: [], promos: [], caixa: 0
-    };
+// --- BANCO DE DADOS ---
+const defaultDb = {
+    users: [
+        { id: 1, name: 'Lukinha Admin', user: 'lukinha', pass: 'master1', type: 'admin', note: 'Dono' },
+        { id: 2, name: 'João Exemplo', user: '999999999', pass: '123', type: 'client', note: 'Cliente teste' }
+    ],
+    agenda: [],
+    promos: [{ id: 1, title: 'Bem vindo!', msg: 'Agende seu corte pelo app!' }],
+    financeiro: [], // { id, date, desc, type: 'entrada'|'saida', val }
+    precos: [
+        { id: 1, name: 'Corte Social', val: 30 },
+        { id: 2, name: 'Degradê', val: 35 },
+        { id: 3, name: 'Barba', val: 20 },
+        { id: 4, name: 'Corte + Barba', val: 50 }
+    ]
+};
 
-    let userAtivo = null;
-    let loginType = 'client';
+let db = JSON.parse(localStorage.getItem('lukinhaDb')) || defaultDb;
+let userAtivo = null;
 
-    const save = () => { localStorage.setItem('lukinha_v6', JSON.stringify(db)); render(); };
+function saveDb() {
+    localStorage.setItem('lukinhaDb', JSON.stringify(db));
+    render();
+}
 
-    function setLoginType(t) { 
-        loginType = t; 
-        document.getElementById('tab-cli').classList.toggle('active', t === 'client');
-        document.getElementById('tab-adm').classList.toggle('active', t === 'admin');
+// --- LOGIN ---
+function login() {
+    const u = document.getElementById('l-user').value;
+    const p = document.getElementById('l-pass').value;
+    const user = db.users.find(x => x.user === u && x.pass === p);
+    
+    if(user) {
+        userAtivo = user;
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('app-wrapper').style.display = 'flex';
+        initApp();
+    } else {
+        document.getElementById('login-msg').innerText = 'Usuário ou senha incorretos.';
     }
+}
 
-    function logar() {
-        const u = document.getElementById('u-in').value.toLowerCase();
-        const p = document.getElementById('p-in').value;
-        const user = db.users.find(x => x.u === u && x.p === p);
-        if(user && (loginType === 'admin' ? user.t === 'admin' : user.t === 'client')) {
-            userAtivo = user;
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById(user.t === 'admin' ? 'm-adm' : 'm-cli').style.display = 'flex';
-            tab(user.t === 'admin' ? 'a-home' : 'c-book');
-            sync(); render();
-        } else alert("Dados inválidos ou tipo de conta incorreto.");
-    }
+function logout() { location.reload(); }
 
-    function tab(id, el) {
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active-section'));
-        const target = document.getElementById(id);
-        if(target) target.classList.add('active-section');
-        if(el) {
-            document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
-            el.classList.add('active');
-        }
+function initApp() {
+    document.getElementById('m-adm').style.display = 'none';
+    document.getElementById('m-cli').style.display = 'none';
+    
+    if(userAtivo.type === 'admin') {
+        document.getElementById('m-adm').style.display = 'flex';
+        tab('a-home', document.querySelector('#m-adm .nav-link'));
+    } else {
+        document.getElementById('m-cli').style.display = 'flex';
+        tab('c-book', document.querySelector('#m-cli .nav-link'));
     }
+    render();
+}
 
-    function sync() {
-        if(userAtivo.t === 'admin') {
-            document.getElementById('i-corte').value = db.prices.corte;
-            document.getElementById('i-barba').value = db.prices.barba;
-            document.getElementById('i-combo').value = db.prices.combo;
-        } else {
-            document.getElementById('s-serv').innerHTML = `
-                <option value="${db.prices.corte}">Corte R$${db.prices.corte}</option>
-                <option value="${db.prices.barba}">Barba R$${db.prices.barba}</option>
-                <option value="${db.prices.combo}">Combo R$${db.prices.combo}</option>`;
-        }
-    }
+function tab(id, el) {
+    document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+    if(el) el.classList.add('active');
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active-section'));
+    const target = document.getElementById(id);
+    if(target) target.classList.add('active-section');
+    
+    if(id === 'a-cli') renderClientList();
+    if(id === 'a-precos') renderPriceEditor();
+    if(id === 'a-caixa') renderFinance();
+}
 
-    function addPromo() {
-        const t = document.getElementById('p-titulo').value, m = document.getElementById('p-msg').value;
-        if(!t || !m) return alert("Preencha tudo");
-        db.promos.push({id: Date.now(), t, m});
-        document.getElementById('p-titulo').value = ""; document.getElementById('p-msg').value = "";
-        save(); alert("Publicado!");
-    }
+// --- FINANCEIRO ADM ---
+function addMov(type) {
+    const desc = document.getElementById('f-desc').value;
+    const val = parseFloat(document.getElementById('f-val').value);
+    if(!desc || !val) return alert('Preencha os dados.');
+    
+    db.financeiro.unshift({
+        id: Date.now(),
+        date: new Date().toLocaleDateString('pt-BR'),
+        desc: desc,
+        type: type,
+        val: val
+    });
+    
+    document.getElementById('f-desc').value = '';
+    document.getElementById('f-val').value = '';
+    saveDb();
+}
 
-    function addAgenda() {
-        const s = document.getElementById('s-serv'), d = document.getElementById('s-data').value;
-        if(!d) return alert("Data?");
-        db.agenda.push({id: Date.now(), cli: userAtivo.u, serv: s.options[s.selectedIndex].text.split(' R$')[0], val: parseFloat(s.value), data: d.replace('T',' '), pago: false});
-        save(); alert("Agendado!"); tab('c-pay');
-    }
+function renderFinance() {
+    const tbody = document.getElementById('t-fin-body');
+    if(!tbody) return;
+    tbody.innerHTML = '';
+    
+    let entrada = 0;
+    let saida = 0;
 
-    function darBaixa(id) {
-        const i = db.agenda.findIndex(x => x.id === id);
-        if(i !== -1 && !db.agenda[i].pago) {
-            db.agenda[i].pago = true;
-            db.caixa += db.agenda[i].val;
-            save();
-            alert("Pagamento Confirmado!");
-        }
-    }
+    db.financeiro.forEach(f => {
+        if(f.type === 'entrada') entrada += f.val;
+        else saida += f.val;
 
-    function regUser() {
-        const u = document.getElementById('n-u').value.toLowerCase(), p = document.getElementById('n-p').value;
-        if(u && p) { db.users.push({u, p, t:'client'}); save(); alert("Cliente Cadastrado!"); }
-    }
+        tbody.innerHTML += `
+            <tr>
+                <td>${f.date}</td>
+                <td>${f.desc}</td>
+                <td style="color:${f.type === 'entrada' ? 'var(--green)' : 'var(--red)'}">${f.type.toUpperCase()}</td>
+                <td>R$ ${f.val.toFixed(2)}</td>
+            </tr>
+        `;
+    });
 
-    function savePrecos() {
-        db.prices.corte = parseFloat(document.getElementById('i-corte').value);
-        db.prices.barba = parseFloat(document.getElementById('i-barba').value);
-        db.prices.combo = parseFloat(document.getElementById('i-combo').value);
-        save(); alert("Preços salvos!");
-    }
+    document.getElementById('f-in').innerText = `R$ ${entrada.toFixed(2)}`;
+    document.getElementById('f-out').innerText = `R$ ${saida.toFixed(2)}`;
+    document.getElementById('f-total').innerText = `R$ ${(entrada - saida).toFixed(2)}`;
+}
 
-    function render() {
-        if(!userAtivo) return;
-        if(userAtivo.t === 'admin') {
-            let h = "", v = 0;
-            db.agenda.forEach(a => {
-                if(!a.pago) {
-                    v += a.val;
-                    h += `<tr><td>${a.cli}</td><td>${a.serv}</td><td>R$${a.val}</td><td><button class="btn" style="padding:5px;font-size:0.6rem" onclick="darBaixa(${a.id})">Baixa</button></td></tr>`;
-                }
-            });
-            document.getElementById('t-agenda-body').innerHTML = h || "<tr><td colspan='4'>Nenhuma pendência hoje</td></tr>";
-            document.getElementById('st-t').innerText = db.agenda.length;
-            document.getElementById('st-v').innerText = "R$ " + v;
-            document.getElementById('l-caixa').innerHTML = `<h3>Total Acumulado: R$ ${db.caixa.toFixed(2)}</h3>`;
-        }
-        if(userAtivo.t === 'client') {
-            const ag = db.agenda.find(x => x.cli === userAtivo.u && !x.pago);
-            document.getElementById('pay-box').innerHTML = ag ? `<h3>${ag.serv} - R$ ${ag.val}</h3><p>PIX: lukinha@barber.com</p><button class="btn" onclick="darBaixa(${ag.id})">Informar Pagamento</button>` : "Tudo pago!";
-            let nList = "", count = 0;
-            db.promos.forEach(p => { nList += `<div class="notif-card notif-promo"><strong>${p.t}</strong><br>${p.m}</div>`; count++; });
-            if(ag) { nList += `<div class="notif-card notif-pendente"><strong>PAGAMENTO!</strong><br>Você tem um serviço pendente de R$${ag.val}</div>`; count++; }
-            document.getElementById('notif-list').innerHTML = nList || "Sem avisos.";
-            document.getElementById('b-notif').innerText = count;
-        }
+// --- PREÇOS ADM ---
+function renderPriceEditor() {
+    const container = document.getElementById('prices-editor');
+    container.innerHTML = '';
+    db.precos.forEach((p, index) => {
+        container.innerHTML += `
+            <div class="price-row">
+                <input type="text" value="${p.name}" data-idx="${index}" class="p-name-input">
+                <input type="number" value="${p.val}" data-idx="${index}" class="p-val-input" style="width:100px">
+                <button class="btn btn-red btn-sm" onclick="removePrice(${index})">X</button>
+            </div>
+        `;
+    });
+    container.innerHTML += `<button class="btn btn-sm" onclick="addNewPriceRow()" style="margin-bottom:10px">+ NOVO SERVIÇO</button>`;
+}
+
+function addNewPriceRow() {
+    db.precos.push({ id: Date.now(), name: 'Novo Serviço', val: 0 });
+    renderPriceEditor();
+}
+
+function removePrice(idx) {
+    db.precos.splice(idx, 1);
+    renderPriceEditor();
+}
+
+function savePrices() {
+    const names = document.querySelectorAll('.p-name-input');
+    const values = document.querySelectorAll('.p-val-input');
+    
+    db.precos = [];
+    names.forEach((n, i) => {
+        db.precos.push({
+            id: Date.now() + i,
+            name: n.value,
+            val: parseFloat(values[i].value) || 0
+        });
+    });
+    
+    saveDb();
+    alert('Tabela de preços atualizada!');
+}
+
+// --- ADMIN OUTROS ---
+function adminRegisterClient() {
+    const n = document.getElementById('adm-c-name').value;
+    const u = document.getElementById('adm-c-phone').value;
+    const p = document.getElementById('adm-c-pass').value;
+
+    if(!n || !u || !p) return alert('Preencha todos os campos.');
+    if(db.users.find(x => x.user === u)) return alert('Telefone já cadastrado.');
+
+    db.users.push({ id: Date.now(), name: n, user: u, pass: p, type: 'client', note: '' });
+    saveDb();
+    alert('Cliente cadastrado!');
+    renderClientList();
+}
+
+function renderClientList() {
+    const container = document.getElementById('clients-list-container');
+    if(!container) return;
+    container.innerHTML = '';
+    db.users.filter(u => u.type === 'client').forEach(client => {
+        container.innerHTML += `
+            <div class="client-card">
+                <div class="client-name">${client.name}</div>
+                <div style="color:#888; font-size:0.8rem">📱 ${client.user} | Senha: ${client.pass}</div>
+                <textarea id="note-${client.id}" style="margin-top:10px" placeholder="Notas sobre o cliente...">${client.note || ''}</textarea>
+                <button class="btn btn-sm" onclick="saveNote(${client.id})">SALVAR NOTA</button>
+            </div>
+        `;
+    });
+}
+
+function saveNote(id) {
+    const idx = db.users.findIndex(u => u.id === id);
+    db.users[idx].note = document.getElementById(`note-${id}`).value;
+    saveDb();
+    alert('Nota salva!');
+}
+
+function darBaixa(id) {
+    const idx = db.agenda.findIndex(a => a.id === id);
+    if(idx > -1) {
+        db.agenda[idx].pago = true;
+        // Adiciona ao financeiro automaticamente
+        db.financeiro.unshift({
+            id: Date.now(),
+            date: new Date().toLocaleDateString('pt-BR'),
+            desc: `Corte: ${db.agenda[idx].cliName}`,
+            type: 'entrada',
+            val: parseFloat(db.agenda[idx].val)
+        });
+        saveDb();
     }
+}
+
+function deleteBooking(id) {
+    if(confirm('Excluir agendamento?')) {
+        db.agenda = db.agenda.filter(a => a.id !== id);
+        saveDb();
+    }
+}
+
+// --- CLIENTE ---
+function book() {
+    const sId = document.getElementById('c-serv').value;
+    const serv = db.precos.find(p => p.id == sId);
+    const d = document.getElementById('c-date').value;
+    const t = document.getElementById('c-time').value;
+    
+    if(!d) return alert('Selecione uma data.');
+    
+    db.agenda.push({
+        id: Date.now(), cliId: userAtivo.id, cliName: userAtivo.name,
+        serv: serv.name, val: serv.val, date: d, time: t, pago: false
+    });
+    saveDb();
+    alert('Agendado com sucesso!');
+}
+
+// --- RENDER GERAL ---
+function render() {
+    if(!userAtivo) return;
+
+    if(userAtivo.type === 'admin') {
+        const tbody = document.getElementById('t-agenda-body');
+        tbody.innerHTML = '';
+        let pendente = 0;
+        db.agenda.forEach(item => {
+            if(!item.pago) pendente += parseFloat(item.val);
+            tbody.innerHTML += `
+                <tr>
+                    <td>${item.time}<br><small>${item.date}</small></td>
+                    <td>${item.cliName}</td>
+                    <td>${item.serv} (R$${item.val})</td>
+                    <td>
+                        ${item.pago ? '<b style="color:var(--green)">PAGO</b>' : `<button class="btn btn-sm btn-green" onclick="darBaixa(${item.id})">$</button>`}
+                        <button class="btn btn-sm btn-red" onclick="deleteBooking(${item.id})">X</button>
+                    </td>
+                </tr>
+            `;
+        });
+        document.getElementById('st-t').innerText = db.agenda.length;
+        document.getElementById('st-v').innerText = `R$ ${pendente.toFixed(2)}`;
+        document.getElementById('agenda-empty').style.display = db.agenda.length ? 'none' : 'block';
+        renderFinance();
+    } else {
+        // Renderizar Select de Serviços
+        const select = document.getElementById('c-serv');
+        select.innerHTML = db.precos.map(p => `<option value="${p.id}">${p.name} - R$ ${p.val}</option>`).join('');
+
+        const myList = db.agenda.filter(x => x.cliId === userAtivo.id);
+        document.getElementById('my-bookings').innerHTML = myList.map(b => `
+            <div style="background:#222; padding:10px; margin-top:5px; border-radius:8px; border-left:4px solid ${b.pago?'var(--green)':'var(--red)'}">
+                <b>${b.date} às ${b.time}</b><br>
+                <span>${b.serv} - R$ ${b.val}</span>
+            </div>
+        `).join('') || 'Nenhum agendamento.';
+
+        const pends = myList.filter(x => !x.pago);
+        document.getElementById('pay-box').innerHTML = pends.map(p => `
+            <div class="card" style="margin-bottom:10px">
+                <h3>${p.serv}</h3>
+                <p style="font-size:1.5rem; color:var(--gold)">R$ ${p.val}</p>
+                <div style="background:#111; padding:10px; border-radius:5px; margin-top:10px">
+                    <small>CHAVE PIX CNPJ:</small><br>
+                    <b>12.345.678/0001-90</b>
+                </div>
+            </div>
+        `).join('') || 'Não há nada a pagar.';
+        
+        document.getElementById('b-notif').innerText = db.promos.length + pends.length;
+        document.getElementById('notif-list').innerHTML = db.promos.map(p => `
+            <div class="notif-card"><b>${p.title}</b><p>${p.msg}</p></div>
+        `).join('');
+    }
+}
+
+function addPromo() {
+    const t = document.getElementById('p-title').value;
+    const m = document.getElementById('p-msg').value;
+    if(!t || !m) return;
+    db.promos.unshift({ id: Date.now(), title: t, msg: m });
+    saveDb();
+    alert('Notificação enviada!');
+    document.getElementById('p-title').value = '';
+    document.getElementById('p-msg').value = '';
+}
+
+document.getElementById('c-date').valueAsDate = new Date();
 </script>
 </body>
 </html>
